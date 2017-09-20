@@ -1160,9 +1160,6 @@
 			// Remove any transitions happening
 			this.transition(true);
 
-			// Indicate that we are currently panning
-			this.panning = true;
-
 			// Trigger start event
 			this._trigger('start', event, touches);
 
@@ -1196,7 +1193,7 @@
 
 			var move = function(e) {
 				var coords;
-				e.preventDefault();
+				e.stopPropagation();
 				touches = e.touches || e.originalEvent.touches;
 				setStart(e, touches);
 
@@ -1229,6 +1226,9 @@
 				if (!coords) {
 					coords = e;
 				}
+
+				// Indicate that we are currently panning
+				this.panning = true;
 
 				self.pan(
 					origPageX + coords.pageX - startPageX,
